@@ -26,10 +26,12 @@ steps:
 
 - task: SonarCloudAnalyze@1
 
-- script: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=DevOps-ORT-G2_products-service
-  displayName: 'Run SonarCloud analyze'
+#- script: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=DevOps-ORT-G2_products-service
+#  displayName: 'Run SonarCloud analyze'
 
 - task: SonarCloudPublish@1
   inputs:
     pollingTimeoutSec: '300'
 
+- script: Pasé el test!
+  displayName: 'Post test'
