@@ -27,13 +27,10 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/Dockerfile'
         tags: |
           $(tag)
-#
-### Push ###
-#
-- task: ECRPushImage@1
-  inputs:
-    awsCredentials: 'AWS'
-    regionName: 'us-east-1'
-    imageSource: 'imagename'
-    repositoryName: 'products-service'
-    autoCreateRepository: true
+    - task: ECRPushImage@1
+      inputs:
+        awsCredentials: 'AWS'
+        regionName: 'us-east-1'
+        imageSource: 'imagename'
+        repositoryName: 'products-service'
+        autoCreateRepository: true
