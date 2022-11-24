@@ -28,3 +28,10 @@ stages:
         imageName: products-service
         tags: |
           $(tag)
+    - task: ECRPushImage@1
+      inputs:
+        awsCredentials: 'AWS'
+        regionName: 'us-east-1'
+        imageSource: 'imagename'
+        sourceImageName: 'products-service'
+        repositoryName: 'products-service'
