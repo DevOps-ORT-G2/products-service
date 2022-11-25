@@ -71,13 +71,11 @@ steps:
     arguments: '--build-arg JAR_FILE=target/products-service-example-0.0.1-SNAPSHOT.jar'
     imageName: 'products-service'
 
-- task: Docker@2
+- script: docker run -d --name products-service-test products-service
   displayName: Levantar docker 
-  inputs:
-    command: 'run'
-    arguments: '-d --name products-service-test products-service'
-    addPipelineData: false
-    addBaseImageData: false
+
+- script: docker inspect products-service-test | grep IPAddress
+  displayName: ip del docker
 
 #- script: docker run -d --name products-service-test products-service
 #  displayName: levanto docker  manual
