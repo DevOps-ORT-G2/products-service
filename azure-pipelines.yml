@@ -71,10 +71,13 @@ steps:
 
 - task: Docker@2
   inputs:
-    command: 'start'
+    command: 'run'
     arguments: '-d --name products-service-test products-service'
     addPipelineData: false
     addBaseImageData: false
+
+- script: docker run -d --name products-service-test products-service
+  displayName: levanto docker  manual
 
 - script: docker ps -a
   displayName: hay docker levantado?
