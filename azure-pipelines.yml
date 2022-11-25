@@ -74,7 +74,7 @@ steps:
 - script: docker run -d --name products-service-test products-service
   displayName: Levantar docker 
 
-- script: docker inspect products-service-test | grep IPAddress
+- script: docker inspect products-service-test | grep "IPAddress" -A 1 -m 1
   displayName: ip del docker
 
 #- script: docker run -d --name products-service-test products-service
