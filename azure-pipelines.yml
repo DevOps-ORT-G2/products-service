@@ -57,12 +57,10 @@ steps:
 - script: mvn install
   displayName: Generar build del jar
     
-
-
-
 ##########################################################
 # Buildeamos imagen docker
 ##########################################################
+
 - task: Docker@1
   displayName: Realizar build de imagen docker
   inputs:
@@ -76,6 +74,32 @@ steps:
 
 - script: docker inspect products-service-test | grep '"IPAddress":' -A 0 -m 1 | cut -f4 -d'"' 
   displayName: ip del docker
+
+# crear api gateway para tener un unico punto de acceso
+- script: |
+    conf="upstream monolith {
+    >server 172.17.0.2:8080;
+    >}
+    >
+    >server {
+    >access_log /var/log/nginx/api_access.log main; # Each API may also log to a separate file
+    >
+    >listen 80;
+    >server_name _;
+    >
+    ># URI routing
+    >#
+    >
+    >location / {
+    >    proxy_pass http://monolith/;
+    >}
+    >}"
+    docker pull nginx:1.21
+    mkdir nginx-conf
+    echo "$conf" > nginx-conf/api_gateway.conf
+    cat api_gateway.conf
+    docker run --name api-gateway -v $PATH_AL_DIRECTORIO/nginx-conf/:/etc/nginx/conf.d/ -d nginx:1.21
+  displayName: 'Disponibilizo api_gateway'
 
 #- script: docker run -d --name products-service-test products-service
 #  displayName: levanto docker  manual
