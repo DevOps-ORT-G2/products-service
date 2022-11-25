@@ -28,15 +28,17 @@ steps:
 # Realizamos análisis de código estático con SonarCloud
 ##########################################################
 - task: SonarCloudPrepare@1
+  displayName: Configurar SonarCloud
   inputs:
     SonarCloud: 'sonarcloud'
     organization: 'devops-ort-g2'
     scannerMode: 'Other'
 
 - script: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=DevOps-ORT-G2_products-service
-  displayName: 'Run SonarCloud analyze'
+  displayName: 'Ejecutar análisis de SonarCloud'
 
 - task: SonarCloudPublish@1
+  displayName: Publicar resultado en el resultado del pipeline
   inputs:
     pollingTimeoutSec: '300'
 
@@ -53,7 +55,7 @@ steps:
 ##########################################################
 
 - script: mvn install
-  displayName: Genero build del jar
+  displayName: Generar build del jar
     
 
 
@@ -62,14 +64,15 @@ steps:
 # Buildeamos imagen docker
 ##########################################################
 - task: Docker@1
-  displayName: Build an image
+  displayName: Realizo build de imagen docker
   inputs:
     command: 'Build an image'
     dockerFile: '**/Dockerfile'
-    arguments: '--build-arg JAR_FILE=products-service-example.jar'
+    arguments: '--build-arg JAR_FILE=products-service99.jar'
     imageName: 'products-service'
 
 - task: Docker@2
+  displayName: Levanto docker 
   inputs:
     command: 'run'
     arguments: '-d --name products-service-test products-service'
