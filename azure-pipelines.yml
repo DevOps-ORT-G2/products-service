@@ -27,20 +27,20 @@ steps:
 ##########################################################
 # Realizamos análisis de código estático con SonarCloud
 ##########################################################
-- task: SonarCloudPrepare@1
-  displayName: Configurar SonarCloud
-  inputs:
-    SonarCloud: 'sonarcloud'
-    organization: 'devops-ort-g2'
-    scannerMode: 'Other'
+#- task: SonarCloudPrepare@1
+#  displayName: Configurar SonarCloud
+#  inputs:
+#    SonarCloud: 'sonarcloud'
+#    organization: 'devops-ort-g2'
+#    scannerMode: 'Other'
 
-- script: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=DevOps-ORT-G2_products-service
-  displayName: 'Ejecutar análisis de SonarCloud'
+#- script: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=DevOps-ORT-G2_products-service
+#  displayName: 'Ejecutar análisis de SonarCloud'
 
-- task: SonarCloudPublish@1
-  displayName: Publicar resultado en el resultado del pipeline
-  inputs:
-    pollingTimeoutSec: '300'
+#- task: SonarCloudPublish@1
+#  displayName: Publicar resultado en el resultado del pipeline
+#  inputs:
+#    pollingTimeoutSec: '300'
 
 
 
@@ -97,8 +97,8 @@ steps:
     docker pull nginx:1.21
     mkdir nginx-conf
     echo "$conf" > nginx-conf/api_gateway.conf
-    cat api_gateway.conf
-    docker run --name api-gateway -v $PATH_AL_DIRECTORIO/nginx-conf/:/etc/nginx/conf.d/ -d nginx:1.21
+    cat nginx-conf/api_gateway.conf
+    docker run --name api-gateway -v nginx-conf/:/etc/nginx/conf.d/ -d nginx:1.21
     
   displayName: 'Disponibilizo api_gateway'
   
