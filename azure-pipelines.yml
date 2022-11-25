@@ -64,15 +64,15 @@ steps:
 # Buildeamos imagen docker
 ##########################################################
 - task: Docker@1
-  displayName: Realizo build de imagen docker
+  displayName: Realizar build de imagen docker
   inputs:
     command: 'Build an image'
     dockerFile: '**/Dockerfile'
-    arguments: '--build-arg JAR_FILE=products-service99.jar'
+    arguments: '--build-arg JAR_FILE=target/products-service-example-0.0.1-SNAPSHOT.jar'
     imageName: 'products-service'
 
 - task: Docker@2
-  displayName: Levanto docker 
+  displayName: Levantar docker 
   inputs:
     command: 'run'
     arguments: '-d --name products-service-test products-service'
