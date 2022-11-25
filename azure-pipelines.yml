@@ -102,7 +102,9 @@ steps:
     
   displayName: 'Disponibilizo api_gateway'
   
-- script: curl http://172.17.0.2:8080/products/
+- script: | 
+    content=$(curl -L http://172.17.0.2:8080/products/)
+    echo $content
   displayName: prueba curl
 
 #- script: docker run -d --name products-service-test products-service
