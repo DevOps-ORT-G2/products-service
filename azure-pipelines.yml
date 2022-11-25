@@ -21,18 +21,18 @@ steps:
 ##########################################################
 # Realizamos análisis de código estático con SonarCloud
 ##########################################################
-- task: SonarCloudPrepare@1
-  inputs:
-    SonarCloud: 'sonarcloud'
-    organization: 'devops-ort-g2'
-    scannerMode: 'Other'
+#- task: SonarCloudPrepare@1
+#  inputs:
+#    SonarCloud: 'sonarcloud'
+#    organization: 'devops-ort-g2'
+#    scannerMode: 'Other'
 
-- script: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=DevOps-ORT-G2_products-service
-  displayName: 'Run SonarCloud analyze'
+#- script: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=DevOps-ORT-G2_products-service
+#  displayName: 'Run SonarCloud analyze'
 
-- task: SonarCloudPublish@1
-  inputs:
-    pollingTimeoutSec: '300'
+#- task: SonarCloudPublish@1
+#  inputs:
+#    pollingTimeoutSec: '300'
 
 
 
