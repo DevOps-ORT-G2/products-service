@@ -98,7 +98,7 @@ steps:
     mkdir nginx-conf
     echo "$conf" > nginx-conf/api_gateway.conf
     cat nginx-conf/api_gateway.conf
-    docker run --name api-gateway -v nginx-conf/:/etc/nginx/conf.d/ -d nginx:1.21
+    docker run --name api-gateway -v ./nginx-conf/:/etc/nginx/conf.d/ -d nginx:1.21
     
   displayName: 'Disponibilizo api_gateway'
   
