@@ -101,9 +101,12 @@ steps:
     docker run --name api-gateway -v /home/vsts/work/1/s/nginx-conf/:/etc/nginx/conf.d/ -d nginx:1.21
     
   displayName: 'Disponibilizo api_gateway'
-  
+
+- script: docker inspect products-service-test | grep '"IPAddress":' -A 0 -m 1 | cut -f4 -d'"' 
+  displayName: ip del docker api-gateway
+
 - script: | 
-    content=$(curl -L http://172.17.0.2:8080/products/)
+    content=$(curl -L http://172.17.0.3:8080/products/)
     echo $content
   displayName: prueba curl
 
