@@ -102,11 +102,11 @@ steps:
     
   displayName: 'Disponibilizo api_gateway'
 
-- script: docker inspect api-gateway | grep '"IPAddress":' -A 0 -m 1 | cut -f4 -d'"' 
+- script: docker inspect api-gateway
   displayName: ip del docker api-gateway
 
 - script: | 
-    content=$(curl -L http://172.17.0.3:80/products/)
+    content=$(curl -L http://172.17.0.3/products/)
     echo $content
   displayName: prueba curl
 
