@@ -124,7 +124,7 @@ steps:
   displayName: Ejecutar test Postman
   inputs:
     collectionSourceType: 'url'
-    collectionURL: 'https://api.postman.com/collections/7660732-7b581810-3edf-4eac-81f8-43d6cbaa5933?access_key=PMAT-01GJVH7K4P7A315GPQSEQXNE7Y'
+    collectionURL: 'https://api.postman.com/collections/7660732-00c5eb61-5cbe-4097-a366-2876c2b14c27?access_key=PMAT-01GJVHJH8EZFQXZFVS65GYC8WM'
     environmentSourceType: 'none'
     bail: true
     bailmodifier: 'failre'
