@@ -128,7 +128,6 @@ steps:
     environmentSourceType: 'none'
     bail: true
     bailmodifier: 'failre'
-    reporters: 'html'
 
 #- script: | 
 #    content=$(curl -L http://172.17.0.3/products/)
