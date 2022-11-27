@@ -57,25 +57,13 @@ steps:
 - script: mvn install
   displayName: Generar build del jar
     
-##########################################################
-# Buildeamos imagen docker
-##########################################################
 
-- task: Docker@1
-  displayName: Realizar build de imagen docker
-  inputs:
-    command: 'Build an image'
-    dockerFile: '**/Dockerfile'
-    arguments: '--build-arg JAR_FILE=target/products-service-example-0.0.1-SNAPSHOT.jar'
-    imageName: 'products-service'
+#################################################################################################
+# Previo a crear la imagen de docker
+# Aprovisionamos un api gateway para tener un unico punto de acceso para las pruebas postman
+# Levantamos este docker primero para siempre tener misma IP y dejar seteado en postman
+#################################################################################################
 
-- script: docker run -d --name products-service-test products-service
-  displayName: Levantar docker 
-
-- script: docker inspect products-service-test | grep '"IPAddress":' -A 0 -m 1 | cut -f4 -d'"' 
-  displayName: ip del docker
-
-# crear api gateway para tener un unico punto de acceso
 - script: |
     conf="upstream products {
       server 172.17.0.2:8080;
@@ -97,21 +85,47 @@ steps:
     cat nginx-conf/api_gateway.conf
     docker run --name api-gateway -v /home/vsts/work/1/s/nginx-conf/:/etc/nginx/conf.d/ -d nginx:1.21
     
-  displayName: 'Disponibilizo api_gateway'
+  displayName: 'Aprovisionar API GATEWAY'
 
-- script: docker inspect api-gateway
-  displayName: ip del docker api-gateway
+- script: docker inspect api-gateway | grep '"IPAddress":' -A 0 -m 1 | cut -f4 -d'"' 
+  displayName: Consultar ip del docker api-gateway
 
-- script: | 
-    content=$(curl -L http://172.17.0.3/products/)
-    echo $content
-  displayName: prueba curl
 
-#- script: docker run -d --name products-service-test products-service
-#  displayName: levanto docker  manual
+#########################################################################################
+# Buildeamos imagen docker del MS y levantamos para realizar pruebas con postman
+#########################################################################################
+
+- task: Docker@1
+  displayName: Realizar build de imagen docker
+  inputs:
+    command: 'Build an image'
+    dockerFile: '**/Dockerfile'
+    arguments: '--build-arg JAR_FILE=target/products-service-example-0.0.1-SNAPSHOT.jar'
+    imageName: 'products-service'
+
+- script: docker run -d --name products-service-test products-service
+  displayName: Levantar docker 
+
+- script: docker inspect products-service-test | grep '"IPAddress":' -A 0 -m 1 | cut -f4 -d'"' 
+  displayName: Obtener ip del docker MS
 
 - script: docker ps -a
-  displayName: hay docker levantado?
+  displayName: Verificar dockers levantados
+
+#########################################################################################
+# Ejecutamos pruebas con docker newman
+#########################################################################################
+
+
+- script: docker run -t postman/newman run "https://www.getpostman.com/collections/be7efdf4263369db5ed6" 
+  displayName: Ejecutar test Postman
+
+#- script: | 
+#    content=$(curl -L http://172.17.0.3/products/)
+#    echo $content
+#  displayName: prueba curl
+
+
     
 ##########################################################
 # Pusheamos la imagen de docker al ECR
