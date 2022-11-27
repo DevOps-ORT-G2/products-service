@@ -117,7 +117,7 @@ steps:
 #########################################################################################
 
 
-- script: docker run -t postman/newman run "https://www.getpostman.com/collections/be7efdf4263369db5ed6" 
+- script: docker run -t postman/newman run "https://elements.getpostman.com/redirect?entityId=24047413-c1aa65af-1ad1-45a2-b7ea-b75bfccb562d&entityType=collection" 
   displayName: Ejecutar test Postman
 
 #- script: | 
