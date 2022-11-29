@@ -25,35 +25,18 @@ steps:
 #  displayName: 'Run a multi-line script'
 
 ##########################################################
-# Buildeamos el JAR
-##########################################################
-
-#- script: mvn install
-#  displayName: Generar build del jar
-
-- task: Maven@4
-  inputs:
-    mavenPomFile: 'pom.xml'
-    publishJUnitResults: false
-    javaHomeOption: 'JDKVersion'
-    mavenVersionOption: 'Default'
-    mavenAuthenticateFeed: false
-    effectivePomSkip: false
-    sonarQubeRunAnalysis: true
-    sqMavenPluginVersionChoice: 'latest'
-
-##########################################################
 # Realizamos análisis de código estático con SonarCloud
 ##########################################################
-- task: SonarCloudPrepare@1
-  displayName: Configurar SonarCloud
-  inputs:
-    SonarCloud: 'sonarcloud'
-    organization: 'devops-ort-g2'
-    scannerMode: 'Other'
+#- task: SonarCloudPrepare@1
+#  displayName: Configurar SonarCloud
+#  inputs:
+#    SonarCloud: 'sonarcloud'
+#    organization: 'devops-ort-g2'
+#    scannerMode: 'MSBuild'
+#    projectKey: 'DevOps-ORT-G2_products-service'
 
-#- script: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=DevOps-ORT-G2_products-service
-#  displayName: 'Ejecutar análisis de SonarCloud'
+- script: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=DevOps-ORT-G2_products-service
+  displayName: 'Ejecutar análisis de SonarCloud'
 
 - task: SonarCloudPublish@1
   displayName: Publicar resultado en el resultado del pipeline
@@ -70,7 +53,23 @@ steps:
     SonarCloud: 'sonarcloud'
     organization: 'devops-ort-g2'
 
+##########################################################
+# Buildeamos el JAR
+##########################################################
 
+#- script: mvn install
+#  displayName: Generar build del jar
+
+- task: Maven@4
+  inputs:
+    mavenPomFile: 'pom.xml'
+    publishJUnitResults: false
+    javaHomeOption: 'JDKVersion'
+    mavenVersionOption: 'Default'
+    mavenAuthenticateFeed: false
+    effectivePomSkip: false
+    sonarQubeRunAnalysis: true
+    sqMavenPluginVersionChoice: 'latest'
 
 #################################################################################################
 # Previo a crear la imagen de docker
