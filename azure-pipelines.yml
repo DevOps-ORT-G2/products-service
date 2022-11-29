@@ -128,33 +128,11 @@ steps:
   displayName: Verificar dockers levantados
 
 #########################################################################################
-# Ejecutamos pruebas con newman
+# Ejecutamos pruebas con newman desde un docker
 #########################################################################################
 
-
-- script: docker run -t -v $(pwd):/etc/newman dannydainton/htmlextra run "https://api.postman.com/collections/7660732-00c5eb61-5cbe-4097-a366-2876c2b14c27?access_key=PMAT-01GJVHJH8EZFQXZFVS65GYC8WM" -r htmlextra
+- script: docker run -t postman/newman:alpine run "https://api.postman.com/collections/7660732-00c5eb61-5cbe-4097-a366-2876c2b14c27?access_key=PMAT-01GJVHJH8EZFQXZFVS65GYC8WM" 
   displayName: Ejecutar test Postman
-
-#- script: |
-#    npm install -g newman
-#    npm install -g newman-reporter-htmlextra
-#  displayName: Instalar newman y newman reporter
-
-#- task: NewmanPostman@4
-#  displayName: Ejecutar test Postman
-#  inputs:
-#    collectionSourceType: 'url'
-#    collectionURL: 'https://api.postman.com/collections/7660732-00c5eb61-5cbe-4097-a366-2876c2b14c27?access_key=PMAT-01GJVHJH8EZFQXZFVS65GYC8WM'
-#    environmentSourceType: 'none'
-#    bail: true
-#    bailmodifier: 'failre'
-#    reporters: 'htmlextra'
-    
-- task: UploadPostmanHtmlReport@1
-  displayName: Subir reporte Postman
-  inputs:
-    cwd: '$(System.DefaultWorkingDirectory)'
-    tabName: 'Reporte Postman'
 
 #- script: | 
 #    content=$(curl -L http://172.17.0.3/products/)
