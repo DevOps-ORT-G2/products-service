@@ -32,7 +32,7 @@ steps:
   inputs:
     SonarCloud: 'sonarcloud'
     organization: 'devops-ort-g2'
-    scannerMode: 'Other'
+    scannerMode: 'MSBuild'
     projectKey: 'DevOps-ORT-G2_products-service'
 
 #- script: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=DevOps-ORT-G2_products-service
