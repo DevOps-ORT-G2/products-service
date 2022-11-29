@@ -132,22 +132,22 @@ steps:
 #########################################################################################
 
 
-#- script: docker run -t postman/newman run "https://api.postman.com/collections/7660732-00c5eb61-5cbe-4097-a366-2876c2b14c27?access_key=PMAT-01GJVHJH8EZFQXZFVS65GYC8WM" 
-#  displayName: Ejecutar test Postman
-
-- task: NewmanPostman@4
+- script: docker run -t postman/newman run https://api.postman.com/collections/7660732-00c5eb61-5cbe-4097-a366-2876c2b14c27?access_key=PMAT-01GJVHJH8EZFQXZFVS65GYC8WM -r htmlextra --reporter-htmlextra-export report.html
   displayName: Ejecutar test Postman
-  inputs:
-    collectionSourceType: 'url'
-    collectionURL: 'https://api.postman.com/collections/7660732-00c5eb61-5cbe-4097-a366-2876c2b14c27?access_key=PMAT-01GJVHJH8EZFQXZFVS65GYC8WM'
-    environmentSourceType: 'none'
-    bail: true
-    bailmodifier: 'failre'
-    reporters: 'htmlextra'
+
+#- task: NewmanPostman@4
+#  displayName: Ejecutar test Postman
+#  inputs:
+#    collectionSourceType: 'url'
+#    collectionURL: 'https://api.postman.com/collections/7660732-00c5eb61-5cbe-4097-a366-2876c2b14c27?access_key=PMAT-01GJVHJH8EZFQXZFVS65GYC8WM'
+#    environmentSourceType: 'none'
+#    bail: true
+#    bailmodifier: 'failre'
+#    reporters: 'htmlextra'
     
 - task: UploadPostmanHtmlReport@1
   inputs:
-    cwd: '$(System.DefaultWorkingDirectory)'
+    cwd: '$(System.DefaultWorkingDirectory)/report.html'
     tabName: 'Reporte Postman'
 
 #- script: | 
