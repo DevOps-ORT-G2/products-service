@@ -27,28 +27,32 @@ steps:
 ##########################################################
 # Realizamos análisis de código estático con SonarCloud
 ##########################################################
-#- task: SonarCloudPrepare@1
-#  displayName: Configurar SonarCloud
-#  inputs:
-#    SonarCloud: 'sonarcloud'
-#    organization: 'devops-ort-g2'
-#    scannerMode: 'Other'
+- task: SonarCloudPrepare@1
+  displayName: Configurar SonarCloud
+  inputs:
+    SonarCloud: 'sonarcloud'
+    organization: 'devops-ort-g2'
+    scannerMode: 'Other'
+    projectKey: 'DevOps-ORT-G2_products-service'
 
 #- script: mvn verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=DevOps-ORT-G2_products-service
 #  displayName: 'Ejecutar análisis de SonarCloud'
+- task: SonarCloudAnalyze@1
 
-#- task: SonarCloudPublish@1
-#  displayName: Publicar resultado en el resultado del pipeline
-#  inputs:
-#    pollingTimeoutSec: '300'
-
-
+- task: SonarCloudPublish@1
+  displayName: Publicar resultado en el resultado del pipeline
+  inputs:
+    pollingTimeoutSec: '300'
 
 ##########################################################
-# AGREGAR CONTROL DE FAIL PARA SONARCLOUD
+# Chequear status del análisis de SonarCloud
+# Si falló no cntinua el pipeline
 ##########################################################
 
-
+- task: sonarcloud-buildbreaker@2
+  inputs:
+    SonarCloud: 'sonarcloud'
+    organization: 'devops-ort-g2'
 
 ##########################################################
 # Buildeamos el JAR
