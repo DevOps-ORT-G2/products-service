@@ -45,7 +45,7 @@ steps:
 
 ##########################################################
 # Chequear status del análisis de SonarCloud
-# Si falló no cntinua el pipeline
+# Si falló no continua el pipeline
 ##########################################################
 
 - task: sonarcloud-buildbreaker@2
@@ -143,6 +143,12 @@ steps:
     environmentSourceType: 'none'
     bail: true
     bailmodifier: 'failre'
+    reporters: 'htmlextra'
+    
+- task: UploadPostmanHtmlReport@1
+  inputs:
+    cwd: '$(System.DefaultWorkingDirectory)'
+    tabName: 'Reporte Postman'
 
 #- script: | 
 #    content=$(curl -L http://172.17.0.3/products/)
