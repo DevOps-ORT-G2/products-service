@@ -81,7 +81,7 @@ steps:
 
 - script: |
     conf="upstream products {
-      server 172.17.0.4:8080;
+      server 172.17.0.3:8080;
     }
     
     server {
