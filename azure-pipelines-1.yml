@@ -150,10 +150,13 @@ steps:
 #    imageSource: 'imagename'
 #    sourceImageName: 'products-service'
 #    repositoryName: 'products-service'
+
 - task: ECRPushImage@1
   inputs:
     awsCredentials: 'AWS'
     regionName: 'us-east-1'
-    imageSource: 'imagename'
-    sourceImageName: 'products-service'
+    imageSource: 'imageid'
+    sourceImageId: 'imagename'
     repositoryName: 'micro-servicios'
+    autoCreateRepository: true
+    forceDockerNamingConventions: true
