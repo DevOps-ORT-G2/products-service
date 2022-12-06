@@ -16,7 +16,8 @@ pool:
   vmImage: ubuntu-latest
 
 steps:
-
+- checkout: self
+  persistCredentials: true
 ##########################################################
 # Realizamos análisis de código estático con SonarCloud
 ##########################################################
