@@ -16,3 +16,5 @@ gh auth logout
 git checkout staging | git push --set-upstream origin staging
 git checkout qa | git push --set-upstream origin qa
 git checkout develop | git push --set-upstream origin develop
+
+
